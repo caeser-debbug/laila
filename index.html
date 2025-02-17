@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pour Lailatou ❤️</title>
+    <style>
+        /* Style de base */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff0f5;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        /* Écran de chargement avec cœur battant */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff0f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease-out;
+        }
+        
+        .heart-loader {
+            position: relative;
+            width: 100px;
+            height: 90px;
+            transform: scale(1);
+        }
+        
+        .heart-loader:before,
+        .heart-loader:after {
+            position: absolute;
+            content: "";
+            left: 50px;
+            top: 0;
+            width: 50px;
+            height: 80px;
+            background: #ff6b81;
+            border-radius: 50px 50px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+            animation: heartbeat 1.2s infinite;
+        }
+        
+        .heart-loader:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(0.8) rotate(-45deg); }
+            5% { transform: scale(0.85) rotate(-45deg); }
+            10% { transform: scale(0.9) rotate(-45deg); }
+            15% { transform: scale(0.9) rotate(-45deg); }
+            50% { transform: scale(0.8) rotate(-45deg); }
+            100% { transform: scale(0.8) rotate(-45deg); }
+        }
+        
+        .loading-text {
+            position: absolute;
+            bottom: 30%;
+            font-size: 1.5rem;
+            color: #ff6b81;
+            opacity: 0;
+            animation: pulse-text 2s infinite;
+        }
+        
+        @keyframes pulse-text {
+            0% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+        
+        /* Contenu principal (initialement caché) */
+        .main-content {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        /* Section message */
+        .message {
+            background-color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Animation de cœurs flottants */
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-150px) rotate(20deg); opacity: 0; }
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            color: #ff6b81;
+            pointer-events: none;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        /* Cœurs qui tombent */
+        .falling-heart {
+            position: absolute;
+            color: #ff6b81;
+            font-size: 1.5rem;
+            animation: falling linear forwards;
+            z-index: 5;
+        }
+        
+        @keyframes falling {
+            0% { transform: translateY(-5vh) translateX(0); opacity: 1; }
+            100% { transform: translateY(100vh) translateX(10vw); opacity: 0.6; }
+        }
+        
+        /* Galerie photo */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .gallery-item:hover::after {
+            content: '❤️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            opacity: 0;
+            animation: pop 0.5s forwards;
+        }
+        
+        @keyframes pop {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            70% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /* Section vidéo */
+        .video-container {
+            margin: 40px 0;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            padding-top: 56.25%; /* Ratio 16:9 */
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffb6c1;
+            color: white;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #ffc0cb, #ffb6c1);
+            border-radius: 30px 30px 0 0;
+            color: white;
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Effet pulsation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+            display: inline-block;
+        }
+        
+        /* Effet de battement de cœur sur survol */
+        .heartbeat-hover:hover {
+            animation: heartbeat-effect 1.5s infinite;
+        }
+        
+        @keyframes heartbeat-effect {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Cœurs sur les bords */
+        .corner-heart {
+            position: absolute;
+            font-size: 3rem;
+            color: rgba(255, 107, 129, 0.3);
+            z-index: 0;
+        }
+        
+        /* Pour les appareils mobiles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .heart-loader {
+                width: 70px;
+                height: 60px;
+            }
+            
+            .loading-text {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Écran de chargement avec cœur battant -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="heart-loader"></div>
+        <div class="loading-text">Préparation de la surprise pour Lailatou...</div>
+    </div>
+    
+    <!-- Contenu principal (initialement caché) -->
+    <div class="main-content" id="mainContent">
+        <header>
+            <!-- Cœurs décoratifs dans les coins -->
+            <div class="corner-heart" style="top: 10px; left: 10px;">❤️</div>
+            <div class="corner-heart" style="top: 10px; right: 10px;">❤️</div>
+            <div class="corner-heart" style="bottom: 10px; left: 10px;">❤️</div>
+            <div class="corner-heart" style="bottom: 10px; right: 10px;">❤️</div>
+            
+            <h1>Pour ma bestie 
+                <span class="pulse">❤️</span> 
+                Lailatou
+            </h1>
+            <div class="subtitle">De la part d'Ali</div>
+        </header>
+        
+        <div class="container">
+            <section class="message heartbeat-hover" id="messageContainer">
+                <h2>Ma très chère Lailatou,</h2>
+                <p>
+                    Je voulais te créer cette page spéciale pour te dire combien tu comptes pour moi. Depuis que nous nous connaissons, tu as apporté tellement de joie et de bonheur dans ma vie. Tu es plus qu'une amie pour moi.
+                </p>
+                <p>
+                    Merci d'être toujours là pour moi, dans les bons comme dans les mauvais moments. Tu me fais rire quand je suis triste, tu me soutiens quand j'en ai besoin, et tu me comprends comme personne d'autre.
+                </p>
+                <p>
+                    Cette page est un petit témoignage de notre vecu si précieux. J'espère qu'elle te fera sourire et que tu ressentiras tout l'amour que j'ai pour toi.
+                </p>
+                <p>
+                    Tu es une personne extraordinaire, Lailatou. Ne change jamais.
+                </p>
+                <p>
+                    Avec toute mon affection,<br>
+                </p>
+            </section>
+            
+            <h2 class="heartbeat-hover">Reste toujours toi meme</h2>
+            <div class="gallery">
+                <!-- Remplacez les placeholders par vos propres images -->
+                <div class="gallery-item">
+                    <img src="image/1739755259389.jpg" alt="Moment partagé avec Lailatou 1" />
+                </div>
+                <div class="gallery-item">
+                    <img src="image/FB_IMG_1739755146837.jpg" alt="Moment partagé avec Lailatou 2" />
+                </div>
+                <div class="gallery-item">
+                    <img src="image/Screenshot_20250217-022037.jpg" alt="Moment partagé avec Lailatou 3" />
+                </div>
+            </div>
+            
+            </div>
+            
+            <footer>
+                <div class="corner-heart" style="top: 10px; left: 30px;">❤️</div>
+                <div class="corner-heart" style="top: 10px; right: 30px;">❤️</div>
+                
+                <p>Avec tout mon amour ❤️ - Ali</p>
+                <p>Fait spécialement pour Lailatou, la meilleure qu'on puisse avoir</p>
+                
+                <div id="footerHearts" class="pulse">❤️❤️❤️</div>
+            </footer>
+        </div>
+    </div>
+    
+    <script>
+        // Affichage de l'écran de chargement et du contenu principal
+        window.onload = function() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const mainContent = document.getElementById('mainContent');
+            
+            // Afficher l'écran de chargement pendant 3 secondes
+            setTimeout(function() {
+                loadingScreen.style.opacity = '0';
+                mainContent.style.opacity = '1';
+                
+                // Supprimer l'écran de chargement après la transition
+                setTimeout(function() {
+                    loadingScreen.style.display = 'none';
+                }, 1000);
+            }, 3000);
+        }
+        
+        // Fonction pour créer des cœurs flottants
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.opacity = Math.random() * 0.5 + 0.5;
+            heart.style.fontSize = Math.random() * 2 + 1 + 'rem';
+            
+            document.body.appendChild(heart);
+            
+            // Supprimer le cœur après la fin de l'animation
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+        
+        // Fonction pour créer des cœurs qui tombent
+        function createFallingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'falling-heart';
+            heart.innerHTML = '❤️';
+            
+            // Position aléatoire en haut de l'écran
+            heart.style.left = Math.random() * 100 + 'vw';
+            
+            // Vitesse et durée aléatoires
+            const duration = Math.random() * 4 + 3;
+            heart.style.animationDuration = duration + 's';
+            
+            // Taille aléatoire
+            heart.style.fontSize = Math.random() * 1.5 + 0.8 + 'rem';
+            
+            document.body.appendChild(heart);
+            
+            // Supprimer le cœur après la fin de l'animation
+            setTimeout(() => {
+                heart.remove();
+            }, duration * 1000);
+        }
+        
+        // Créer un cœur flottant toutes les 300ms
+        setInterval(createHeart, 300);
+        
+        // Créer un cœur qui tombe toutes les 400ms
+        setInterval(createFallingHeart, 400);
+        
+        // Lorsque la souris passe sur le message, ajouter plus de cœurs
+        const messageContainer = document.getElementById('messageContainer');
+        messageContainer.addEventListener('mouseover', () => {
+            for(let i = 0; i < 10; i++) {
+                setTimeout(createHeart, i * 100);
+            }
+        });
+        
+        // Ajouter une explosion de cœurs au clic
+        document.addEventListener('click', (e) => {
+            for(let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = e.pageX + 'px';
+                heart.style.top = e.pageY + 'px';
+                heart.style.animationDuration = Math.random() * 2 + 1 + 's';
+                heart.style.fontSize = Math.random() * 1.5 + 0.8 + 'rem';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 3000);
+            }
+        });
+        
+        // Animation pour le footer
+        const footerHearts = document.getElementById('footerHearts');
+        setInterval(() => {
+            footerHearts.innerHTML += '❤️';
+            if(footerHearts.innerHTML.length > 15) {
+                footerHearts.innerHTML = '❤️';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
